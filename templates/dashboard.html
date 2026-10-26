@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard - Heart Risk Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body>
+
+<div class="container-fluid">
+
+
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
+    <div class="navbar">
+
+        <h2>
+            ❤️ Heart Risk Prediction
+        </h2>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('predict') }}">
+                Prediction
+            </a>
+
+            <a href="{{ url_for('reports') }}">
+                History
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         WELCOME SECTION
+         ===================================================== -->
+
+    <div class="dashboard-card">
+
+        <h1>
+            Welcome, {{ username }} 👋
+        </h1>
+
+        <p>
+            Welcome to your Heart Risk Prediction Dashboard.
+        </p>
+
+        <p class="text-muted">
+            Use this dashboard to view your prediction activity
+            and previous prediction results.
+        </p>
+
+
+        <div class="mt-3">
+
+            <a href="{{ url_for('predict') }}"
+               class="btn btn-primary">
+
+                Start Heart Risk Prediction
+
+            </a>
+
+
+            <a href="{{ url_for('reports') }}"
+               class="btn btn-outline-primary">
+
+                View Prediction History
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATISTICS CARDS
+         ===================================================== -->
+
+    <div class="row g-4 mt-2">
+
+
+        <!-- TOTAL PREDICTIONS -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Total Predictions
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        {{ total_predictions }}
+                    </h2>
+
+                    <p class="mb-0 text-muted">
+                        Predictions made
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HIGH RISK -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Disease Predicted
+                    </h6>
+
+                    <h2 class="fw-bold text-danger">
+                        {{ high_risk }}
+                    </h2>
+
+                    <p class="mb-0 text-muted">
+                        Predictions classified as disease
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOW RISK -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        No Disease Predicted
+                    </h6>
+
+                    <h2 class="fw-bold text-success">
+                        {{ low_risk }}
+                    </h2>
+
+                    <p class="mb-0 text-muted">
+                        Predictions classified as no disease
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AVERAGE CONFIDENCE -->
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+                        Average Confidence
+                    </h6>
+
+                    <h2 class="fw-bold">
+                        {{ average_confidence }}%
+                    </h2>
+
+                    <p class="mb-0 text-muted">
+                        Average model confidence
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CHART + PROFILE
+         ===================================================== -->
+
+    <div class="row g-4 mt-2">
+
+
+        <!-- PREDICTION DISTRIBUTION -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+                        Prediction Distribution
+                    </h4>
+
+                    <p class="text-muted">
+                        Distribution of your previous predictions.
+                    </p>
+
+
+                    <!--
+                        Store Flask/Jinja values in HTML attributes.
+                        This avoids the JavaScript "Expression expected"
+                        error in VS Code.
+                    -->
+
+                    <div id="predictionChartData"
+                         data-high-risk="{{ high_risk | default(0) }}"
+                         data-low-risk="{{ low_risk | default(0) }}"
+                         style="max-width: 420px; margin: auto;">
+
+                        <canvas id="riskChart"></canvas>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE INFORMATION -->
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">
+                        Profile Information
+                    </h4>
+
+
+                    <div class="profile-info mt-4">
+
+
+                        <div class="profile-row">
+
+                            <div class="profile-label">
+                                Username
+                            </div>
+
+                            <div class="profile-value">
+                                {{ username }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <div class="profile-label">
+                                Email
+                            </div>
+
+                            <div class="profile-value">
+                                {{ email }}
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-row">
+
+                            <div class="profile-label">
+                                Account
+                            </div>
+
+                            <div class="profile-value">
+
+                                <span class="badge badge-active">
+                                    Active
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         RECENT PREDICTIONS
+         ===================================================== -->
+
+    <div class="card shadow-sm mt-4 mb-5">
+
+        <div class="card-body">
+
+
+            <div class="d-flex justify-content-between
+                        align-items-center mb-3">
+
+                <div>
+
+                    <h4 class="card-title mb-1">
+                        Recent Predictions
+                    </h4>
+
+                    <p class="text-muted mb-0">
+                        Your five most recent prediction records.
+                    </p>
+
+                </div>
+
+
+                <a href="{{ url_for('reports') }}"
+                   class="btn btn-outline-primary">
+
+                    View All
+
+                </a>
+
+            </div>
+
+
+            {% if recent_predictions %}
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                #
+                            </th>
+
+                            <th>
+                                Prediction
+                            </th>
+
+                            <th>
+                                Confidence
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    {% for prediction in recent_predictions %}
+
+                        <tr>
+
+                            <td>
+                                {{ loop.index }}
+                            </td>
+
+
+                            <td>
+
+                                {% if prediction.predicted_risk == 1 %}
+
+                                    <span class="badge bg-danger">
+                                        Disease Predicted
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-success">
+                                        No Disease Predicted
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ "%.2f"|format(
+                                    prediction.confidence_score
+                                ) }}%
+
+                            </td>
+
+
+                            <td>
+
+                                {{ prediction.created_at }}
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="text-center py-4">
+
+                <h5>
+                    No predictions yet
+                </h5>
+
+                <p class="text-muted">
+                    Start your first heart-risk prediction
+                    to see your results here.
+                </p>
+
+                <a href="{{ url_for('predict') }}"
+                   class="btn btn-primary">
+
+                    Start Prediction
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         INFORMATION NOTICE
+         ===================================================== -->
+
+    <div class="alert alert-info mb-5">
+
+        <strong>Note:</strong>
+
+        The confidence shown above represents the machine-learning
+        model's prediction confidence. It should not be interpreted
+        as a medical diagnosis.
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     CHART JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    const chartDataElement =
+        document.getElementById("predictionChartData");
+
+
+    const highRisk =
+        Number(chartDataElement.dataset.highRisk);
+
+
+    const lowRisk =
+        Number(chartDataElement.dataset.lowRisk);
+
+
+    const chartCanvas =
+        document.getElementById("riskChart");
+
+
+    if (chartCanvas) {
+
+        const ctx =
+            chartCanvas.getContext("2d");
+
+
+        new Chart(ctx, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+                    "Disease Predicted",
+                    "No Disease Predicted"
+                ],
+
+                datasets: [{
+
+                    data: [
+                        highRisk,
+                        lowRisk
+                    ],
+
+                    borderWidth: 1
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom"
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

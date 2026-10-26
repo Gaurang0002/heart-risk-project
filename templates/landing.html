@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Heart Risk Prediction System</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+
+        <a class="navbar-brand" href="/">
+            <span class="brand-icon">
+                <i class="bi bi-heart-pulse-fill"></i>
+            </span>
+            Heart Risk Prediction
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="#home">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">
+                        About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">
+                        Features
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#how-it-works">
+                        How It Works
+                    </a>
+                </li>
+
+                <li class="nav-item ms-lg-3">
+                    <a href="{{ url_for('login') }}"
+                       class="btn btn-outline-primary nav-login">
+                        Login
+                    </a>
+                </li>
+
+                <li class="nav-item ms-lg-2">
+                    <a href="{{ url_for('signup') }}"
+                       class="btn btn-primary nav-signup">
+                        Sign Up
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- ================= HERO SECTION ================= -->
+
+<section id="home" class="hero-section">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <!-- LEFT CONTENT -->
+
+            <div class="col-lg-6">
+
+                <div class="hero-badge">
+                    <i class="bi bi-stars"></i>
+                    Machine Learning Based System
+                </div>
+
+                <h1>
+                    Understand Your
+                    <span>Heart Risk</span>
+                    with Machine Learning
+                </h1>
+
+                <p class="hero-text">
+                    The Heart Risk Prediction System analyzes important
+                    health factors using machine-learning algorithms and
+                    provides an understandable prediction with
+                    LIME-based contributing-factor explanations.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="{{ url_for('signup') }}"
+                       class="btn btn-primary btn-lg">
+                        Get Started
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+
+                    <a href="#how-it-works"
+                       class="btn btn-outline-secondary btn-lg">
+                        Learn More
+                    </a>
+
+                </div>
+
+                <div class="hero-note">
+                    <i class="bi bi-shield-check"></i>
+                    Academic machine-learning project
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT MEDICAL CARD -->
+
+            <div class="col-lg-6">
+
+                <div class="hero-visual">
+
+                    <div class="glow-circle"></div>
+
+                    <div class="heart-card">
+
+                        <div class="heart-icon">
+                            <i class="bi bi-heart-pulse-fill"></i>
+                        </div>
+
+                        <h4>Heart Risk Analysis</h4>
+
+                        <p>
+                            Machine Learning + LIME
+                        </p>
+
+                        <!-- ECG -->
+
+                        <div class="ecg-container">
+
+                            <svg viewBox="0 0 500 120"
+                                 preserveAspectRatio="none">
+
+                                <polyline
+                                    points="0,70 80,70 100,68 115,72
+                                    130,70 145,70 160,35 175,105
+                                    190,70 220,70 250,70 270,70
+                                    285,45 300,70 330,70 360,70
+                                    380,70 400,70 415,55 430,70
+                                    500,70"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="4">
+                                </polyline>
+
+                            </svg>
+
+                        </div>
+
+                        <div class="analysis-items">
+
+                            <div>
+                                <i class="bi bi-cpu"></i>
+                                <span>ML Prediction</span>
+                            </div>
+
+                            <div>
+                                <i class="bi bi-search"></i>
+                                <span>LIME Explanation</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FLOATING CARDS -->
+
+                    <div class="floating-card card-one">
+
+                        <i class="bi bi-graph-up-arrow"></i>
+
+                        <div>
+                            <strong>Risk Analysis</strong>
+                            <small>Data-driven prediction</small>
+                        </div>
+
+                    </div>
+
+                    <div class="floating-card card-two">
+
+                        <i class="bi bi-lightbulb"></i>
+
+                        <div>
+                            <strong>Explainable AI</strong>
+                            <small>LIME factors</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT SECTION ================= -->
+
+<section id="about" class="about-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>ABOUT THE SYSTEM</span>
+
+            <h2>
+                A Machine Learning Approach to Heart Risk Analysis
+            </h2>
+
+            <p>
+                This system uses machine-learning techniques to analyze
+                selected heart-health factors and generate an individual
+                prediction. LIME is used to provide an explanation of
+                the factors contributing to the model's prediction.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 mt-4">
+
+            <div class="col-md-4">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        <i class="bi bi-database"></i>
+                    </div>
+
+                    <h4>Health Factors</h4>
+
+                    <p>
+                        The system analyzes selected input features related
+                        to heart disease prediction.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+
+                    <h4>Machine Learning</h4>
+
+                    <p>
+                        Multiple machine-learning algorithms are trained
+                        and evaluated for heart-risk prediction.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="info-card">
+
+                    <div class="info-icon">
+                        <i class="bi bi-lightbulb"></i>
+                    </div>
+
+                    <h4>Explainable Prediction</h4>
+
+                    <p>
+                        LIME helps explain which features contributed
+                        to an individual model prediction.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section id="features" class="features-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>SYSTEM FEATURES</span>
+
+            <h2>
+                Everything You Need in One System
+            </h2>
+
+            <p>
+                The system combines machine learning, prediction and
+                explainability in a simple web-based interface.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 mt-4">
+
+            <!-- FEATURE 1 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-heart-pulse"></i>
+                    </div>
+
+                    <h4>Heart Risk Prediction</h4>
+
+                    <p>
+                        Enter health-related information and obtain a
+                        machine-learning-based prediction.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEATURE 2 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-robot"></i>
+                    </div>
+
+                    <h4>Multiple ML Models</h4>
+
+                    <p>
+                        Compare different machine-learning algorithms
+                        using standard evaluation metrics.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEATURE 3 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-bar-chart"></i>
+                    </div>
+
+                    <h4>Confidence Score</h4>
+
+                    <p>
+                        View the model's prediction confidence along
+                        with the prediction result.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEATURE 4 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        <i class="bi bi-search-heart"></i>
+                    </div>
+
+                    <h4>LIME Explanation</h4>
+
+                    <p>
+                        Understand the features that contributed to
+                        an individual prediction.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section id="how-it-works" class="workflow-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>HOW IT WORKS</span>
+
+            <h2>
+                Simple Steps to Get a Prediction
+            </h2>
+
+            <p>
+                The system follows a straightforward machine-learning
+                workflow from input data to explainable prediction.
+            </p>
+
+        </div>
+
+
+        <div class="workflow">
+
+            <div class="workflow-step">
+
+                <div class="step-number">01</div>
+
+                <div class="step-icon">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+
+                <h4>Create Account</h4>
+
+                <p>
+                    Register and securely log in to the system.
+                </p>
+
+            </div>
+
+
+            <div class="workflow-line"></div>
+
+
+            <div class="workflow-step">
+
+                <div class="step-number">02</div>
+
+                <div class="step-icon">
+                    <i class="bi bi-clipboard2-pulse"></i>
+                </div>
+
+                <h4>Enter Details</h4>
+
+                <p>
+                    Provide the required health-related input values.
+                </p>
+
+            </div>
+
+
+            <div class="workflow-line"></div>
+
+
+            <div class="workflow-step">
+
+                <div class="step-number">03</div>
+
+                <div class="step-icon">
+                    <i class="bi bi-cpu"></i>
+                </div>
+
+                <h4>ML Prediction</h4>
+
+                <p>
+                    The trained model processes the input data.
+                </p>
+
+            </div>
+
+
+            <div class="workflow-line"></div>
+
+
+            <div class="workflow-step">
+
+                <div class="step-number">04</div>
+
+                <div class="step-icon">
+                    <i class="bi bi-lightbulb"></i>
+                </div>
+
+                <h4>LIME Explanation</h4>
+
+                <p>
+                    Important contributing features are displayed.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta-section">
+
+    <div class="container">
+
+        <div class="cta-box">
+
+            <div>
+
+                <span>GET STARTED</span>
+
+                <h2>
+                    Explore the Heart Risk Prediction System
+                </h2>
+
+                <p>
+                    Create an account and explore the machine-learning
+                    based prediction system.
+                </p>
+
+            </div>
+
+            <div>
+
+                <a href="{{ url_for('signup') }}"
+                   class="btn btn-light btn-lg">
+                    Create Account
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DISCLAIMER ================= -->
+
+<section class="disclaimer-section">
+
+    <div class="container">
+
+        <div class="disclaimer">
+
+            <i class="bi bi-exclamation-triangle"></i>
+
+            <div>
+
+                <h5>Academic Project Disclaimer</h5>
+
+                <p>
+                    This system is developed for academic and educational
+                    purposes. The prediction generated by this system
+                    should not be considered a medical diagnosis or a
+                    substitute for professional medical advice.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-content">
+
+            <div>
+
+                <h5>
+                    <i class="bi bi-heart-pulse-fill"></i>
+                    Heart Risk Prediction System
+                </h5>
+
+                <p>
+                    Machine Learning Based Academic Project
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Heart Risk Prediction System. All rights reserved.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+</html>

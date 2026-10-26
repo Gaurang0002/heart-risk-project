@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Heart Risk Prediction</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container mt-5 mb-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="text-center mb-3">
+            Heart Risk Prediction
+        </h2>
+
+        <p class="text-center text-muted mb-4">
+            Enter the patient's information
+        </p>
+
+        <form method="POST"
+              action="{{ url_for('predict') }}">
+
+            <div class="row">
+
+                <!-- Age -->
+<div class="col-md-6 mb-3">
+    <label class="form-label">Age</label>
+    <input type="number"
+           name="age"
+           class="form-control"
+           min="1"
+           max="120"
+           step="1"
+           placeholder="Enter age"
+           required>
+    <div class="form-text">Allowed: 1–120 years</div>
+</div>
+
+                <!-- Sex -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Sex</label>
+
+                    <select name="sex"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select</option>
+                        <option value="0">Female</option>
+                        <option value="1">Male</option>
+
+                    </select>
+                </div>
+
+                <!-- Chest Pain -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Chest Pain Type (cp)
+                    </label>
+
+                    <select name="cp"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select</option>
+                        <option value="0">Typical Angina</option>
+                        <option value="1">Atypical Angina</option>
+                        <option value="2">Non-anginal Pain</option>
+                        <option value="3">Asymptomatic</option>
+
+                    </select>
+                </div>
+
+               <!-- Resting Blood Pressure -->
+<div class="col-md-6 mb-3">
+    <label class="form-label">Resting Blood Pressure</label>
+    <input type="number"
+           name="trestbps"
+           class="form-control"
+           min="50"
+           max="300"
+           step="1"
+           placeholder="Enter resting blood pressure"
+           required>
+    <div class="form-text">Allowed: 50–300 mmHg</div>
+</div>
+
+                <!-- Cholesterol -->
+<div class="col-md-6 mb-3">
+    <label class="form-label">Cholesterol</label>
+    <input type="number"
+           name="chol"
+           class="form-control"
+           min="50"
+           max="1000"
+           step="1"
+           placeholder="Enter cholesterol level"
+           required>
+    <div class="form-text">Allowed: 50–1000 mg/dL</div>
+</div>
+                <!-- FBS -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Fasting Blood Sugar
+                    </label>
+
+                    <select name="fbs"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+
+                    </select>
+                </div>
+
+                <!-- Rest ECG -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Resting ECG
+                    </label>
+
+                    <select name="restecg"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select</option>
+                        <option value="0">Normal</option>
+                        <option value="1">ST-T Wave Abnormality</option>
+                        <option value="2">Left Ventricular Hypertrophy</option>
+
+                    </select>
+                </div>
+
+               <!-- Maximum Heart Rate -->
+<div class="col-md-6 mb-3">
+    <label class="form-label">Maximum Heart Rate</label>
+    <input type="number"
+           name="thalach"
+           class="form-control"
+           min="30"
+           max="250"
+           step="1"
+           placeholder="Enter maximum heart rate"
+           required>
+    <div class="form-text">Allowed: 30–250 bpm</div>
+</div>
+
+
+                <!-- Exercise Angina -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Exercise Induced Angina
+                    </label>
+
+                    <select name="exang"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select</option>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+
+                    </select>
+                </div>
+
+                <!-- Oldpeak -->
+<div class="col-md-6 mb-3">
+    <label class="form-label">ST Depression (oldpeak)</label>
+    <input type="number"
+           name="oldpeak"
+           class="form-control"
+           min="-10"
+           max="10"
+           step="0.1"
+           placeholder="Enter ST depression"
+           required>
+    <div class="form-text">Allowed: -10 to 10</div>
+</div>
+
+                <!-- Slope -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Slope
+                    </label>
+
+                    <select name="slope"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select</option>
+                        <option value="0">Upsloping</option>
+                        <option value="1">Flat</option>
+                        <option value="2">Downsloping</option>
+
+                    </select>
+                </div>
+
+                <!-- CA -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Number of Major Vessels (ca)
+                    </label>
+
+                    <select name="ca"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+
+                    </select>
+                </div>
+
+                <!-- Thal -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        Thalassemia (thal)
+                    </label>
+
+                    <select name="thal"
+                            class="form-select"
+                            required>
+
+                        <option value="">Select</option>
+                        <option value="0">Normal</option>
+                        <option value="1">Fixed Defect</option>
+                        <option value="2">Reversible Defect</option>
+
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-4">
+
+                <button type="submit"
+                        class="btn btn-primary btn-lg px-5">
+
+                    Predict Heart Risk
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

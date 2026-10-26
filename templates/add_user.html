@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add User - Heart Risk Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h2>Heart Risk Prediction</h2>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                User Management
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="form-card">
+
+        <h1>Add New User</h1>
+
+        <p class="subtitle">
+            Create a new user account from the admin panel.
+        </p>
+
+
+        <!-- FLASH -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <form method="POST">
+
+
+            <!-- USERNAME -->
+
+            <label>
+                Username
+            </label>
+
+            <input type="text"
+                   name="username"
+                   placeholder="Enter username"
+                   required>
+
+
+            <!-- EMAIL -->
+
+            <label>
+                Email
+            </label>
+
+            <input type="email"
+                   name="email"
+                   placeholder="Enter email"
+                   required>
+
+
+            <!-- PASSWORD -->
+
+            <label>
+                Password
+            </label>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Minimum 6 characters"
+                   minlength="6"
+                   required>
+
+
+            <!-- ROLE -->
+
+            <label>
+                Role
+            </label>
+
+            <select name="role">
+
+                <option value="user">
+                    User
+                </option>
+
+                <option value="admin">
+                    Admin
+                </option>
+
+            </select>
+
+
+            <!-- STATUS -->
+
+            <label>
+                Account Status
+            </label>
+
+            <select name="status">
+
+                <option value="active">
+                    Active
+                </option>
+
+                <option value="inactive">
+                    Inactive
+                </option>
+
+            </select>
+
+
+            <!-- BUTTONS -->
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="btn-primary">
+
+                    Create User
+
+                </button>
+
+                <a href="{{ url_for('admin_dashboard') }}"
+                   class="cancel-btn">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

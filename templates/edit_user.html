@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit User - Heart Risk Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h2>Heart Risk Prediction</h2>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                User Management
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="form-card">
+
+        <h1>Edit User</h1>
+
+        <p class="subtitle">
+            Update user account information.
+        </p>
+
+
+        <!-- FLASH -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+
+        <form method="POST">
+
+
+            <!-- USERNAME -->
+
+            <label>
+                Username
+            </label>
+
+            <input type="text"
+                   name="username"
+                   value="{{ user.username }}"
+                   required>
+
+
+            <!-- EMAIL -->
+
+            <label>
+                Email
+            </label>
+
+            <input type="email"
+                   name="email"
+                   value="{{ user.email }}"
+                   required>
+
+
+            <!-- PASSWORD -->
+
+            <label>
+                New Password
+            </label>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Leave blank to keep current password">
+
+
+            <small>
+                Leave this field empty if you don't want to change
+                the password.
+            </small>
+
+
+            <!-- ROLE -->
+
+            <label>
+                Role
+            </label>
+
+            <select name="role">
+
+                <option value="user"
+                    {% if user.role == "user" %}
+                        selected
+                    {% endif %}>
+
+                    User
+
+                </option>
+
+                <option value="admin"
+                    {% if user.role == "admin" %}
+                        selected
+                    {% endif %}>
+
+                    Admin
+
+                </option>
+
+            </select>
+
+
+            <!-- STATUS -->
+
+            <label>
+                Account Status
+            </label>
+
+            <select name="status">
+
+                <option value="active"
+                    {% if user.status == "active" %}
+                        selected
+                    {% endif %}>
+
+                    Active
+
+                </option>
+
+                <option value="inactive"
+                    {% if user.status == "inactive" %}
+                        selected
+                    {% endif %}>
+
+                    Inactive
+
+                </option>
+
+            </select>
+
+
+            <!-- BUTTONS -->
+
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="btn-primary">
+
+                    Save Changes
+
+                </button>
+
+                <a href="{{ url_for('admin_dashboard') }}"
+                   class="cancel-btn">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="login-box">
+
+        <h1>Heart Risk Prediction</h1>
+
+        <h2>Verify OTP</h2>
+
+        <p class="info">
+            Enter the 6-digit OTP sent to your email.
+        </p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endwith %}
+
+        <form method="POST">
+
+            <label>OTP</label>
+
+            <input
+                type="text"
+                name="otp"
+                placeholder="Enter 6-digit OTP"
+                maxlength="6"
+                required
+            >
+
+            <button type="submit">
+                Verify OTP
+            </button>
+
+        </form>
+
+        <div class="links">
+
+            <a href="{{ url_for('forgot_password') }}">
+                Send New OTP
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

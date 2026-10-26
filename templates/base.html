@@ -1,0 +1,8 @@
+{% if session.get('user_id') %}
+
+<a href="{{ url_for('predict') }}"
+   class="btn btn-primary">
+    Heart Risk Prediction
+</a>
+
+{% endif %}
