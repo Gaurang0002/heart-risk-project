@@ -1,0 +1,7 @@
+Flask
+gunicorn
+python-dotenv
+mysql-connector-python
+numpy
+pandas
+scikit-learn
